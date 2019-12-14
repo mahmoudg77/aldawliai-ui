@@ -1,8 +1,8 @@
 import { LoadingService } from './../services/loading.service';
 import { AppSettingsService } from './../services/bll/app-settings.service';
-import { Platform } from '@ionic/angular';
+import { Platform, IonRouterOutlet, AlertController } from '@ionic/angular';
 import { AuthService } from './../services/auth/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
 // import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
@@ -69,7 +69,7 @@ export class ClientAppComponent implements OnInit {
       ];
   websiteUrl: string;
   helpUrl: string;
-  whatsapp:string;
+  @ViewChild(IonRouterOutlet,{static:false}) routerOutlet: IonRouterOutlet;
     ngOnInit(): void {
         // this.statusBar.styleDefault();
         // this.statusBar.isVisible=true;
@@ -79,20 +79,11 @@ export class ClientAppComponent implements OnInit {
 
         //   // set status bar to white
         // this.statusBar.backgroundColorByName("primary");
-        this.settings.getSettings("web_site_url",'http://19089-co.site',
-         next=>{
-                this.websiteUrl =next;
-         });
-         this.settings.getSettings("help_page_url",'http://19089-co.site',
-         next=>{
-                this.helpUrl =next;
-         });
-         this.settings.getSettings("whatsapp_number",'201143184244',
-         next=>{
-                this.whatsapp =next;
-         });
+        this.settings.getSettings("web_site_url",'http://19089-co.site',next=>this.websiteUrl =next);
+         this.settings.getSettings("help_page_url",'http://19089-co.site',next=>this.helpUrl =next);
+         
     }
-    constructor(
+     constructor(
         // private statusBar: StatusBar,
         private auth:AuthService,
         private router:Router,
@@ -100,10 +91,57 @@ export class ClientAppComponent implements OnInit {
         private platform:Platform,
         private settings:AppSettingsService,
         // private webIntent:WebIntent,
-        private loading:LoadingService
-    ){
+        private loading:LoadingService,
+     ){
 
-    }
+      // const msg={
+      //   header: 'اختيار الجهاز',
+      //   //subHeader: 'Subtitle',
+      //   message: 'موجود من قبل \n\r' + 'هل تريد تسجيل جهاز جديد؟',
+      //   buttons: [
+      //     {
+      //       text: 'لا',
+      //       role: 'cancel',
+      //       cssClass: 'secondary',
+      //       handler: () => {
+              
+      //       }
+      //     }, {
+      //       text: 'نعم',
+      //       cssClass: 'prinmary',
+      //       handler: () => {
+
+      //       }
+            
+      //     }
+      //   ]
+        
+      //  }
+     
+     
+        // platform.backButton.subscribeWithPriority(0,()=>{
+        //   if (this.routerOutlet && this.routerOutlet.canGoBack()) {
+        //     this.routerOutlet.pop();
+        //   } else if (this.router.url === '/login-client' || this.router.url === '/check' || this.router.url === '/login-user') {
+        //     //this.platform.exitApp();
+        //     msg.message=this.router.url;
+        //     const myAlert=  this.dialogs.create(msg);
+        //     myAlert.then(ex=>{
+        //       ex.present()
+        //      });
+        //     // or if that doesn't work, try
+        //    // navigator['app'].exitApp();
+        //   } else {
+        //     //alert("اضفط باك مرة اخرى");
+        //     msg.message=this.router.url;
+        //     const myAlert=  this.dialogs.create(msg);
+        //     myAlert.then(ex=>{
+        //       ex.present()
+        //      });
+        //   }
+        // });
+      
+      }
     logout(){
       this.auth.logout(next=>{
         this.router.navigateByUrl("/home");

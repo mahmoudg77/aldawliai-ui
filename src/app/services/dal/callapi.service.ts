@@ -112,14 +112,14 @@ export class CallapiService {
 
       }
       
-      this.http.post(environment.apiUrl+"/Log/Error",obj).subscribe(
-        next=>{
+      // this.http.post(environment.apiUrl+"/Log/Error",obj).subscribe(
+      //   next=>{
 
-        },
-        error=>{
+      //   },
+      //   error=>{
 
-        }
-      )
+      //   }
+      // )
      
     }
     errorHandling(error:any){

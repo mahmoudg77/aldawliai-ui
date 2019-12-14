@@ -23,7 +23,8 @@ export class DevicesComponent implements OnInit {
   }
   //step: number=1;
   public env=environment;
-  @ViewChild(IonSlides,{static: true}) slides:IonSlides;
+  // @ViewChild(IonSlides,{static: true}) slides:IonSlides;
+  public step=0;
   DeviceTypes: any[];
   Marks: any[];
   filteredMarks: any;
@@ -68,7 +69,8 @@ export class DevicesComponent implements OnInit {
   
   selectDevice(n:number){
     this.selected.DeviceTypeID=n;
-    this.slides.slideNext();
+    this.step=1;
+    // this.slides.slideNext();
     //this.step=2;
     
   }

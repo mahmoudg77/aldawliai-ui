@@ -6,7 +6,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrdersService } from 'src/app/services/bll/orders.service';
-import { ToastController, IonSlides, Platform } from '@ionic/angular';
+import { ToastController, IonSlides, Platform, AlertController, IonRouterOutlet } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -25,6 +25,8 @@ export class UserHomeComponent implements OnInit {
         effect: 'flip'
       };
     env=environment;
+       
+
 
     @ViewChild(IonSlides,{static: true}) slider:IonSlides;
     ngOnInit(event=null): void {
@@ -66,15 +68,15 @@ export class UserHomeComponent implements OnInit {
             error=>{
                 if(event) event.target.complete();
             });
+            
         });
     }
     constructor(public counter:CounterService,
         private router:Router,
         private settings:AppSettingsService,
         private platform:Platform,
-        public orders:OrdersService){
-
-            
+        public orders:OrdersService,
+    ){
      }
 
 

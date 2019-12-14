@@ -51,7 +51,7 @@ export class LoginUserPage implements OnInit {
     },
     error=>{
       this.loadingService.dismiss();
-      this.shared.error(error.message);
+     // this.shared.error(error.message);
     }
     )
 

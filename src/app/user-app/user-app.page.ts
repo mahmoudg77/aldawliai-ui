@@ -1,3 +1,4 @@
+import { LoadingService } from 'src/app/services/loading.service';
 import { AppSettingsService } from './../services/bll/app-settings.service';
 import { Platform } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -80,7 +81,9 @@ export class UserAppPage implements OnInit {
     private router:Router,
     // private inappbrowser:InAppBrowser,
     private platform:Platform,
-    private settings:AppSettingsService
+    private settings:AppSettingsService,
+    private loading:LoadingService,
+
 ){
 
 }
@@ -126,8 +129,10 @@ logout(){
     // if(this.platform.is("android")||this.platform.is("ios")){
     //   this.inappbrowser.create(url,"_self").show();
     // }else{
+      this.loading.present();
       window.open(url,"_self");
-    // }
+      this.loading.dismiss()
+  // }
   }
   openPage(url:string){
     this.router.navigateByUrl(url);
