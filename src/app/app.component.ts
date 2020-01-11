@@ -66,7 +66,13 @@ export class AppComponent  {
            });
        
     });
-   
+    platform.backButton.subscribe((d)=>{
+    console.log(router.url);
+    if(router.url=="/client/home" || router.url=="/user/home"){
+        navigator['app'].exitApp();
+    } 
+    return false;
+ })
    
   }
 
@@ -129,48 +135,48 @@ export class AppComponent  {
         ]
 
         }
-    this.platform.backButton.subscribeWithPriority(0,()=>{
-      // if (this.routerOutlet && this.routerOutlet.canGoBack()) {
-      //   // if (this.router.url === '/home-client' || this.router.url === '/home-user') {
-      //   //  navigator['app'].exitApp();
-      //   //   console.log('11111111111');
-      //   // }else{
-      //   //   console.log('22222222222');
-      //   //   this.routerOutlet.pop();
-      //   // }
-      // } else 
-      let nav = navigator['app'].getActiveNavs()[0];
-      let activeView = nav.getActive();                
+    // this.platform.backButton.subscribeWithPriority(0,()=>{
+    //   // if (this.routerOutlet && this.routerOutlet.canGoBack()) {
+    //   //   // if (this.router.url === '/home-client' || this.router.url === '/home-user') {
+    //   //   //  navigator['app'].exitApp();
+    //   //   //   console.log('11111111111');
+    //   //   // }else{
+    //   //   //   console.log('22222222222');
+    //   //   //   this.routerOutlet.pop();
+    //   //   // }
+    //   // } else 
+    //   let nav = navigator['app'].getActiveNavs()[0];
+    //   let activeView = nav.getActive();                
 
-      if (this.router.url == '/client/home' || this.router.url == '/user/home') {
-        nav.exitApp();
-        //  console.log('33333333333');
-        // msg.message="cannot go back";
-        // const myAlert=  this.dialogs.create(msg);
-        // myAlert.then(ex=>{
-        //   ex.present()
-        //  });
+    //   if (this.router.url == '/client/home' || this.router.url == '/user/home') {
+    //     nav.exitApp();
+    //     //  console.log('33333333333');
+    //     // msg.message="cannot go back";
+    //     // const myAlert=  this.dialogs.create(msg);
+    //     // myAlert.then(ex=>{
+    //     //   ex.present()
+    //     //  });
         
-        }else{
-          nav.pop();
-        }
-        // else{
+    //     }else{
+    //       nav.pop();
+    //     }
+    //     // else{
           
-        //   this.location.back();
-        // }
-      //   // or if that doesn't work, try
-      //    //navigator['app'].exitApp();
-      // } else {
-      //     //alert("اضفط باك مرة اخرى");
-      //   // this.routerOutlet.pop();
-      //   console.log('44444444444444');
-      //   msg.message=this.router.url;
-      //   const myAlert=  this.dialogs.create(msg);
-      //   myAlert.then(ex=>{
-      //     ex.present()
-      //    });
-      // }
-    });
+    //     //   this.location.back();
+    //     // }
+    //   //   // or if that doesn't work, try
+    //   //    //navigator['app'].exitApp();
+    //   // } else {
+    //   //     //alert("اضفط باك مرة اخرى");
+    //   //   // this.routerOutlet.pop();
+    //   //   console.log('44444444444444');
+    //   //   msg.message=this.router.url;
+    //   //   const myAlert=  this.dialogs.create(msg);
+    //   //   myAlert.then(ex=>{
+    //   //     ex.present()
+    //   //    });
+    //   // }
+    // });
     
 
       firebase.initializeApp(environment.firebase);

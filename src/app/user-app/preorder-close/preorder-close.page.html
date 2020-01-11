@@ -15,8 +15,12 @@
         <span style="float: left">#{{ord.ORDER_NO}}</span>
         
       </ion-card-title>
-      <ion-card-subtitle>{{ord.NAME}} (<a href="tel:{{ord.MOBIL}}">{{ord.MOBIL}}</a> {{ord.MOBIL1!="0"?"-":""}} <a href="tel:{{ord.MOBIL1}}" *ngIf="ord.MOBIL1!='0'">{{ord.MOBIL1}}</a>)
-        
+      <ion-card-subtitle>{{ord.NAME}} 
+        (
+          <a href="tel:{{ord.MOBIL}}">{{ord.MOBIL}}</a> 
+          <a href="tel:{{ord.MOBIL1}}" *ngIf="(ord.MOBIL1||'0')!='0'">- {{ord.MOBIL1}}</a> 
+          <a href="tel:{{ord.TEL1}}" *ngIf="(ord.TEL1||'0')!='0'">- {{ord.TEL1}}</a>
+          )
       </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>

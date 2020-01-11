@@ -15,8 +15,12 @@
         <span style="float: left">#{{ord.ORDER_NO}}</span>
         
       </ion-card-title>
-      <ion-card-subtitle>{{ord.NAME}} (<a href="tel:{{ord.MOBIL}}">{{ord.MOBIL}}</a> {{ord.MOBIL1!="0"?"-":""}} <a href="tel:{{ord.MOBIL1}}" *ngIf="ord.MOBIL1!='0'">{{ord.MOBIL1}}</a>)
-        
+      <ion-card-subtitle>{{ord.NAME}} 
+        (
+          <a href="tel:{{ord.MOBIL}}">{{ord.MOBIL}}</a> 
+          <a href="tel:{{ord.MOBIL1}}" *ngIf="(ord.MOBIL1||'0')!='0'">- {{ord.MOBIL1}}</a> 
+          <a href="tel:{{ord.TEL1}}" *ngIf="(ord.TEL1||'0')!='0'">- {{ord.TEL1}}</a>
+          )
       </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
@@ -47,7 +51,12 @@
         <ion-textarea name="Notes"  [(ngModel)]="data.Tech_Report" ></ion-textarea>
       </ion-item>
       <ion-item>
-        <ion-label position="fixed">دفع مبلغ </ion-label>
+        
+          <ion-select #dir name="monyDir" okText="موافق" cancelText="تجاهل" (ionChange)="monyDir=dir.value">
+            <ion-select-option selected value="1" selected>دفع مبلغ</ion-select-option>
+            <ion-select-option value="-1">استرجع مبلغ</ion-select-option>
+            </ion-select>     
+    
         <ion-input  name="Cost" inputmode="numeric" type="number" [(ngModel)]="data.Cost"></ion-input>
       </ion-item>
       <ion-item *ngIf="data.Comp_No==1 && (data.OrderCase_ID==2 || data.OrderCase_ID==4)">
@@ -57,7 +66,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="fixed">رقم الفاتورة </ion-label>
-        <ion-input [(ngModel)]="data.Invoice_No" name="Invoice_No" inputmode="numeric" placeholder="eg.012345">
+        <ion-input [(ngModel)]="data.Invoice_No" name="Invoice_No"  inputmode="numeric" placeholder="eg.012345">
         </ion-input>      
       </ion-item>
       <ion-item>

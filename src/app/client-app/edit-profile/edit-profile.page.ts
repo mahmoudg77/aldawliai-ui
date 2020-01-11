@@ -27,12 +27,12 @@ export class EditProfilePage implements OnInit {
               private lookup:LookupsService,
               private route:ActivatedRoute) { 
                 this.form=new FormGroup({
-                    NAME:new FormControl(null,Validators.required),
+                    NAME:new FormControl(null,[Validators.required,Validators.minLength(10)]),
                     CUNTRY_ID:new FormControl(null,Validators.required),
                     CITY_ID:new FormControl(null,Validators.required),
                     ADDRESS:new FormControl(null,Validators.required),
-                    TEL1:new FormControl(null),
-                    MOBIL1:new FormControl(null),
+                    TEL1:new FormControl(null,[Validators.minLength(7),Validators.maxLength(8)]),
+                    MOBIL1:new FormControl(null,[Validators.minLength(11),Validators.maxLength(13)]),
 
                   })
               }

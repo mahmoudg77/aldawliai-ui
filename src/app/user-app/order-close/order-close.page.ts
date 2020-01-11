@@ -1,9 +1,9 @@
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoadingService } from './../../services/loading.service';
-import { ToastController } from '@ionic/angular';
+import { ToastController,AlertController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LookupsService } from './../../services/bll/lookups.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { OrdersService } from 'src/app/services/bll/orders.service';
 import { CounterService } from 'src/app/services/bll/counter.service';
 
@@ -12,7 +12,10 @@ import { CounterService } from 'src/app/services/bll/counter.service';
   templateUrl: './order-close.page.html',
   styleUrls: ['./order-close.page.scss'],
 })
-export class OrderClosePage implements OnInit {
+export class OrderClosePage implements OnInit,AfterViewInit {
+  ngAfterViewInit(): void {
+  this.monyDir=1
+  }
   follows: any;
   states: any;
   data: any={};
@@ -30,6 +33,7 @@ export class OrderClosePage implements OnInit {
   };
   ord: any={};
   submited: boolean;
+  monyDir=1;
   constructor(private order:OrdersService,
               private lookup:LookupsService,
               private route:Router,
@@ -37,15 +41,18 @@ export class OrderClosePage implements OnInit {
               private toaster:ToastController,
               private counter:CounterService,
               private loading:LoadingService,
-              private auth:AuthService) {
+              private auth:AuthService,
+              private dialogs:AlertController,
+              ) {
     this.data.Follow_ID=this.defaults.follow;
     //this.data.OrderCase_ID=this.defaults.status;
     this.data.StockItems=[];
-
+    
   }
   
   ngOnInit() {
     this.loading.present();
+    
     this.lookup.getFollowStates(
       next=>{
         this.follows=next;
@@ -73,53 +80,89 @@ export class OrderClosePage implements OnInit {
         })
        
   }
-   onSubmit(){
-    this.submited=true;
-    
-    this.loading.present("جاري الحفظ ...");
+  async  onSubmit(){
+   
     if(this.data.OrderCase_ID==this.defaults.status && this.data.Follow_ID==this.defaults.follow){
       this.toaster.create({message:"اختر حالة الطلب او المتابعة",duration:2000}).then(toast=>{toast.present()});
-      this.loading.dismiss();
-      this.submited=false;
       return ;
     }
     if((this.data.Customer_Report||"")==""){
       this.toaster.create({message:"ادخل تقرير العميل ",duration:2000}).then(toast=>{toast.present()})
-      this.loading.dismiss();
-      this.submited=false;
       return ;
     }
     if((this.data.Tech_Report||"")==""){
       this.toaster.create({message:"ادخل تقرير الفني ",duration:2000}).then(toast=>{toast.present()})
-      this.loading.dismiss();
-      this.submited=false;
-
       return ;
     }
 
     if((this.data.Follow_ID==3 || this.data.Follow_ID==10) && (this.data.Action_Date||"")==""){
       this.toaster.create({message:"ادخل تاريخ التأجيل ",duration:2000}).then(toast=>{toast.present()})
-      this.loading.dismiss();
-      this.submited=false;
-
       return ;
     }
     if(this.data.Warranty>24 ||this.data.Warranty<0){
       this.toaster.create({message:"فترة الضمان غير منطقية ",duration:2000}).then(toast=>{toast.present()})
-      this.loading.dismiss();
-      this.submited=false;
-
       return ;
     }
    
     if(this.data.Cost>0 && (this.data.Invoice_No||'')==''){
         this.toaster.create({message:"ادخل رقم الفاتورة ",duration:2000}).then(toast=>{toast.present()})
-        this.loading.dismiss();
-        this.submited=false;
-
         return ;
       }
-    this.order.closeOrder(this.data,
+
+      if((this.data.Cost||0)==0  && ([2,4,5,7,16].includes(this.data.Follow_ID) || (this.data.OrderCase_ID!=3 && this.data.OrderCase_ID!=0))){
+      const msg={
+        header: 'تنبيه',
+        //subHeader: 'Subtitle',
+        message: 'لم تقم بتسجيل المبلغ ' + (this.monyDir==1?"المدفوع من":"المرتجع الى") + ' العميل , هل تريد المتابعة على اي حال؟',
+        buttons: [
+          {
+            text: 'لا',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              console.log();
+              return false;
+            }
+          }, {
+            text: 'نعم',
+            role: 'default',
+            cssClass: 'prinmary',
+            handler: () => {
+              return true;
+            }
+            
+          }
+        ]
+        
+       }
+
+        const myAlert= await  this.dialogs.create(msg);
+        
+         await myAlert.present();
+      
+         let result=await myAlert.onDidDismiss();
+
+         if(result.role!='default'){
+
+           return;
+         } 
+       // console.log(result);
+        //return ;
+      }
+
+
+      // console.log("Contenu !!")
+      // return;
+    this.submited=true;
+  
+    this.loading.present("جاري الحفظ ...");
+    
+    let newdata:any={};
+    Object.assign(newdata,this.data);
+    
+    newdata.Cost=newdata.Cost*this.monyDir;
+
+    this.order.closeOrder(newdata,
       next=>{
         // const orders =this.order.currentOrders.data.filter(a=>a.ORDER_NO==this.data.Order_No);
         // if(orders.length>0){

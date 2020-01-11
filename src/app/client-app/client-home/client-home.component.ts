@@ -42,12 +42,7 @@ export class ClientHomeComponent implements OnInit {
         )
    
        this.slider.startAutoplay() ;
-        this.platform.backButton.subscribe(()=>{
-            if(this.router.url=="/client/home"){
-                 navigator['app'].exitApp();
-                 
-             } 
-         })
+      
          
     }
     ngAfterViewInit() {
@@ -81,7 +76,7 @@ export class ClientHomeComponent implements OnInit {
 
         ){
            
-        
+          
     }
 
     newOrder(){

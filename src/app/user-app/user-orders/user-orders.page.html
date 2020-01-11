@@ -19,7 +19,13 @@
       {{ord.TYP_Devices_NAM}} {{ord.MARK_NAM}} {{ord.DEV_CODE=='1'?'':ord.DEV_CODE}}
       <span>#{{ord.ORDER_NO}}</span>
     </ion-card-title>
-    <ion-card-subtitle>{{ord.NAME}} (<a href="tel:{{ord.MOBIL}}">{{ord.MOBIL}}</a> {{ord.MOBIL1!="0"?"-":""}} <a href="tel:{{ord.MOBIL1}}" *ngIf="ord.MOBIL1!='0'">{{ord.MOBIL1}}</a> {{ord.TEL1!="0"?"-":""}} <a href="tel:{{ord.TEL1}}" *ngIf="ord.TEL1!='0'">{{ord.TEL1}}</a>)</ion-card-subtitle>
+    <ion-card-subtitle>{{ord.NAME}} 
+      (
+      <a href="tel:{{ord.MOBIL}}">{{ord.MOBIL}}</a> 
+      <a href="tel:{{ord.MOBIL1}}" *ngIf="(ord.MOBIL1||'0')!='0'">- {{ord.MOBIL1}}</a> 
+      <a href="tel:{{ord.TEL1}}" *ngIf="(ord.TEL1||'0')!='0'">- {{ord.TEL1}}</a>
+      )
+    </ion-card-subtitle>
   </ion-card-header>
   <ion-card-content  (click)="openOrderHistory(ord.ORDER_NO,ord.COMPLAINT_NO)">
     <ion-grid fixed>

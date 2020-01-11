@@ -125,10 +125,10 @@ export class ClientAppComponent implements OnInit {
         //   } else if (this.router.url === '/login-client' || this.router.url === '/check' || this.router.url === '/login-user') {
         //     //this.platform.exitApp();
         //     msg.message=this.router.url;
-        //     const myAlert=  this.dialogs.create(msg);
-        //     myAlert.then(ex=>{
-        //       ex.present()
-        //      });
+            // const myAlert=  this.dialogs.create(msg);
+            // myAlert.then(ex=>{
+            //   ex.present()
+            //  });
         //     // or if that doesn't work, try
         //    // navigator['app'].exitApp();
         //   } else {
