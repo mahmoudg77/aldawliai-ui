@@ -1,3 +1,4 @@
+import { OrdersService } from 'src/app/services/bll/orders.service';
 import { apiError } from './../../services/dal/api-result';
 import { LookupsService } from './../../services/bll/lookups.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -15,12 +16,12 @@ import { AlertController } from '@ionic/angular';
 export class DevicesComponent implements OnInit {
   // selectedDevice:number;
   // selectedMark: number;
-  selected={
-    DeviceTypeID:0,
-    MarkID:0,
-    DeviceCode:1,
-    //DeviceName:''
-  }
+  // selected={
+  //   DeviceTypeID:0,
+  //   MarkID:0,
+  //   DeviceCode:1,
+  //   //DeviceName:''
+  // }
   //step: number=1;
   public env=environment;
   // @ViewChild(IonSlides,{static: true}) slides:IonSlides;
@@ -34,7 +35,8 @@ export class DevicesComponent implements OnInit {
     private auth:AuthService,
     private platform:Platform,
     private lookups:LookupsService,
-    private dialogs:AlertController) {
+    private dialogs:AlertController,
+    private order:OrdersService) {
     
    }
 
@@ -68,7 +70,11 @@ export class DevicesComponent implements OnInit {
   }
   
   selectDevice(n:number){
-    this.selected.DeviceTypeID=n;
+    if(!this.order.newOrder)this.order.resetNewOrder();
+    this.order.newOrder.DeviceTypeID=n;
+
+
+    // this.selected.DeviceTypeID=n;
     this.step=1;
     // this.slides.slideNext();
     //this.step=2;
@@ -86,23 +92,27 @@ export class DevicesComponent implements OnInit {
   }
 
   async selectMark(n:number){
-      this.selected.MarkID=n;
+    this.order.newOrder.MarkID=n;
+
+      // this.selected.MarkID=n;
       this.auth.getUser().then(next=>{
         if(!next) {
-          this.router.navigateByUrl("/client/edit-profile?device="+this.selected.DeviceTypeID+"&mark="+this.selected.MarkID+"&code="+this.selected.DeviceCode);
+          // this.router.navigateByUrl("/client/edit-profile?device="+this.selected.DeviceTypeID+"&mark="+this.selected.MarkID+"&code="+this.selected.DeviceCode);
+          this.router.navigateByUrl("/client/edit-profile");
           return;
         }
         
          this.lookups.getMyDevices(
           async next=>{
-             const similler= next.filter(a=>(<string>a.ID).indexOf(this.selected.DeviceTypeID+'-'+this.selected.MarkID+'-')!==-1);
+             const similler= next.filter(a=>(<string>a.ID).indexOf(this.order.newOrder.DeviceTypeID+'-'+this.order.newOrder.MarkID+'-')!==-1);
              if(similler.length==0){
-              this.selected.DeviceCode=1;
-              this.router.navigateByUrl("/client/new-order?device="+this.selected.DeviceTypeID+"&mark="+this.selected.MarkID+"&code="+this.selected.DeviceCode);
+              this.order.newOrder.DeviceCode=1;
+              // this.router.navigateByUrl("/client/new-order?device="+this.selected.DeviceTypeID+"&mark="+this.selected.MarkID+"&code="+this.selected.DeviceCode);
+              this.router.navigateByUrl("/client/new-order");
               return;
              }
-             const deviceName=this.DeviceTypes.filter(a=>a.TYP_Devices_ID==this.selected.DeviceTypeID)[0].TYP_Devices_NAM + ' ' + 
-                              this.Marks.filter(a=>a.MARK_ID==this.selected.MarkID)[0].MARK_NAM;
+             const deviceName=this.DeviceTypes.filter(a=>a.TYP_Devices_ID==this.order.newOrder.DeviceTypeID)[0].TYP_Devices_NAM + ' ' + 
+                              this.Marks.filter(a=>a.MARK_ID==this.order.newOrder.MarkID)[0].MARK_NAM;
              
          const alert=await  this.dialogs.create({
               header: 'اختيار الجهاز',
@@ -121,8 +131,9 @@ export class DevicesComponent implements OnInit {
                   text: 'نعم',
                   cssClass: 'prinmary',
                   handler: () => {
-                    this.selected.DeviceCode=similler.length+1;
-                    this.router.navigateByUrl("/client/new-order?device="+this.selected.DeviceTypeID+"&mark="+this.selected.MarkID+"&code="+this.selected.DeviceCode);
+                    this.order.newOrder.DeviceCode=similler.length+1;
+                    // this.router.navigateByUrl("/client/new-order?device="+this.order.newOrder.DeviceTypeID+"&mark="+this.order.newOrder.MarkID+"&code="+this.order.newOrder.DeviceCode);
+                    this.router.navigateByUrl("/client/new-order");
                   }
                   
                 }

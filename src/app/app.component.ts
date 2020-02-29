@@ -67,7 +67,7 @@ export class AppComponent  {
        
     });
     platform.backButton.subscribe((d)=>{
-    console.log(router.url);
+    // console.log(router.url);
     if(router.url=="/client/home" || router.url=="/user/home"){
         navigator['app'].exitApp();
     } 
@@ -112,29 +112,29 @@ export class AppComponent  {
     this.platform.ready().then(() => {
       
       
-      const msg={
-        header: 'اختيار الجهاز',
-        //subHeader: 'Subtitle',
-        message: 'موجود من قبل \n\r' + 'هل تريد تسجيل جهاز جديد؟',
-        buttons: [
-            {
-            text: 'لا',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {
+      // const msg={
+      //   header: 'اختيار الجهاز',
+      //   //subHeader: 'Subtitle',
+      //   message: 'موجود من قبل \n\r' + 'هل تريد تسجيل جهاز جديد؟',
+      //   buttons: [
+      //       {
+      //       text: 'لا',
+      //       role: 'cancel',
+      //       cssClass: 'secondary',
+      //       handler: () => {
                 
-            }
-            }, {
-            text: 'نعم',
-            cssClass: 'prinmary',
-            handler: () => {
+      //       }
+      //       }, {
+      //       text: 'نعم',
+      //       cssClass: 'prinmary',
+      //       handler: () => {
 
-            }
+      //       }
             
-            }
-        ]
+      //       }
+      //   ]
 
-        }
+      //   }
     // this.platform.backButton.subscribeWithPriority(0,()=>{
     //   // if (this.routerOutlet && this.routerOutlet.canGoBack()) {
     //   //   // if (this.router.url === '/home-client' || this.router.url === '/home-user') {
@@ -219,6 +219,7 @@ export class AppComponent  {
 
 
 
+      this.statusBar.backgroundColorByHexString('#810505'); 
 
 
       // firebase.messaging().onTokenRefresh(

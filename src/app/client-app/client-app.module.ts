@@ -39,6 +39,7 @@ const routes: Routes = [
         { path: 'invoices', loadChildren: './invoices/invoices.module#InvoicesPageModule' },
         { path: 'invoice-details', loadChildren: './invoice-details/invoice-details.module#InvoiceDetailsPageModule' },
         { path: 'profile', loadChildren: './client-profile/client-profile.module#ClientProfilePageModule' },
+        { path: 'address', loadChildren: './client-address/client-address.module#ClientAddressModule' },
       ]
     },
 

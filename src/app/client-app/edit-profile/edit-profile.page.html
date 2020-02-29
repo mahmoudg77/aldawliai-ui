@@ -13,55 +13,54 @@
   <form [formGroup]="form">
     <ion-item>
       <ion-label position="floating" dir="rtl">اسم العميل</ion-label>
-      <ion-input formControlName="NAME" type="text"></ion-input>
+      <ion-input formControlName="NAME" [(ngModel)]="profileData.NAME" type="text"></ion-input>
     </ion-item>
     <div *ngIf="form.controls['NAME'].invalid && (form.controls['NAME'].dirty || form.controls['NAME'].touched)" class="alert alert-danger">
       <div *ngIf="form.controls['NAME'].errors.required">من فضلك اكتب اسمك</div>
       <div *ngIf="form.controls['NAME'].errors.minLength">الاسم قصير جداً</div>
     </div>
-    <ion-item>
-      <ion-label position="floating" ></ion-label>
-      <ion-select formControlName="CUNTRY_ID" placeholder="المحافظة" #C (ionChange)="loadCities(C.value)">
-          <ion-select-option *ngFor="let gov of Countries" value="{{gov.CUNTRY_ID}}">{{gov.CUNTRY_NAM}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-          <div *ngIf="form.controls['CUNTRY_ID'].invalid && (form.controls['CUNTRY_ID'].dirty || form.controls['CUNTRY_ID'].touched)" class="alert alert-danger">
-            <div *ngIf="form.controls['CUNTRY_ID'].errors.required">اختر المحافظة</div>
-          </div>
-        
-    <ion-item>
-      <ion-label position="floating"></ion-label>
-      <ion-select formControlName="CITY_ID" placeholder="المنطقة">
-          <ion-select-option *ngFor="let city of Cities" value="{{city.CITY_ID}}">{{city.CITY_NAM}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-        <div *ngIf="form.controls['CITY_ID'].invalid && (form.controls['CITY_ID'].dirty || form.controls['CITY_ID'].touched)" class="alert alert-danger">
-          <div *ngIf="form.controls['CITY_ID'].errors.required">اختر المنطقة</div>
-        </div>
-    <ion-item>
-      <ion-label position="stacked">العنوان</ion-label>
-      <ion-textarea formControlName="ADDRESS"  maxlength="250" ></ion-textarea>
-    </ion-item>
-        <div *ngIf="form.controls['ADDRESS'].invalid && (form.controls['ADDRESS'].dirty || form.controls['ADDRESS'].touched)" class="alert alert-danger">
-          <div *ngIf="form.controls['ADDRESS'].errors.required">اكتب العنوان</div>
-          <div *ngIf="form.controls['ADDRESS'].errors.minLength">العنوان قصير جداً</div>
-        </div>
+    
     <ion-item>
       <ion-label  position="stacked" > رقم تليفون أرضي</ion-label>
-      <ion-input formControlName="TEL1" type="phone" inputmode="tel" maxlength="9"></ion-input>
+      <ion-input formControlName="TEL1"  [(ngModel)]="profileData.TEL1" type="phone" inputmode="tel" maxlength="9"></ion-input>
     </ion-item>
         <div *ngIf="form.controls['TEL1'].invalid && (form.controls['TEL1'].dirty || form.controls['TEL1'].touched)" class="alert alert-danger">
           <div *ngIf="form.controls['TEL1'].errors.minLength">رقم التليفون قصير جداً</div>
           <div *ngIf="form.controls['TEL1'].errors.maxlength">رقم التليفون كبير جداً</div>
         </div>
+
+    <ion-item>
+      <ion-label position="stacked">رقم الموبايل </ion-label>
+      <ion-input formControlName="MOBIL" type="phone"  [(ngModel)]="profileData.MOBIL" inputmode="tel" [disabled]="profileData.MOBIL==phone" maxlength="11"></ion-input>
+    </ion-item>
+    <div *ngIf="form.controls['MOBIL'].invalid && (form.controls['MOBIL'].dirty || form.controls['MOBIL'].touched)" class="alert alert-danger">
+      <div *ngIf="form.controls['MOBIL'].errors.minLength">رقم المحمول قصير جداً</div>
+      <div *ngIf="form.controls['MOBIL'].errors.maxlength">رقم المحمول كبير جداً</div>
+    </div>
     <ion-item>
         <ion-label position="stacked">رقم موبايل آخر</ion-label>
-        <ion-input formControlName="MOBIL1" type="phone" inputmode="tel"  maxlength="11"></ion-input>
+        <ion-input formControlName="MOBIL1"  [(ngModel)]="profileData.MOBIL1" type="phone"  [disabled]="profileData.MOBIL1==phone" inputmode="tel"  maxlength="11"></ion-input>
       </ion-item>
           <div *ngIf="form.controls['MOBIL1'].invalid && (form.controls['MOBIL1'].dirty || form.controls['MOBIL1'].touched)" class="alert alert-danger">
             <div *ngIf="form.controls['MOBIL1'].errors.minLength">رقم المحمول قصير جداً</div>
             <div *ngIf="form.controls['MOBIL1'].errors.maxlength">رقم المحمول كبير جداً</div>
           </div>
+    <ion-item>
+        <ion-label position="stacked">رقم موبايل آخر</ion-label>
+        <ion-input formControlName="MOBIL2" type="phone"  [(ngModel)]="profileData.MOBIL2" [disabled]="profileData.MOBIL2==phone" inputmode="tel"  maxlength="11"></ion-input>
+      </ion-item>
+          <div *ngIf="form.controls['MOBIL2'].invalid && (form.controls['MOBIL2'].dirty || form.controls['MOBIL2'].touched)" class="alert alert-danger">
+            <div *ngIf="form.controls['MOBIL2'].errors.minLength">رقم المحمول قصير جداً</div>
+            <div *ngIf="form.controls['MOBIL2'].errors.maxlength">رقم المحمول كبير جداً</div>
+          </div>
+    <ion-item>
+        <ion-label position="stacked">رقم مختصر</ion-label>
+        <ion-input formControlName="HOT_LINE" type="phone"  [(ngModel)]="profileData.HOT_LINE" inputmode="tel"  maxlength="6"></ion-input>
+      </ion-item>
+        <div *ngIf="form.controls['HOT_LINE'].invalid && (form.controls['HOT_LINE'].dirty || form.controls['HOT_LINE'].touched)" class="alert alert-danger">
+          <div *ngIf="form.controls['HOT_LINE'].errors.minLength">الرقم المختصر قصير جداً</div>
+          <div *ngIf="form.controls['HOT_LINE'].errors.maxlength">الرقم المختصر كبير جداً</div>
+        </div>
 
    
   </form>

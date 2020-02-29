@@ -20,11 +20,11 @@ export const environment = {
     driverOrder: ['indexeddb', 'sqlite', 'websql']
   },
   apiKey:"7F53sB7WZEMXjuMju4vhj8DzvpLNtUuGGTE3CWREk9CTGXSET5qPUgFD7XRpDkozyrahw7bxVWZqHrc4",
-  //apiUrl:"http://localhost:61852",
+  apiUrl:"http://localhost:61852",
   //apiUrl:"https://dawlia.nearyouweb.com",
   //  apiUrl:"http://41.32.248.67",
-  apiUrl:"https://eldawlya19089.com",
-  version:'2.1.0'
+  // apiUrl:"https://new.eldawlya19089.com",
+  version:'2.2.0'
 };
 
 /*

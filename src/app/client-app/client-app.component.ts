@@ -23,9 +23,9 @@ export class ClientAppComponent implements OnInit {
         },
         {
           title: 'تسجيل أوردر جديد',
-          url: '/client/select-device',
+          url: ''/*'/client/address'*/,
           icon: 'add',
-          onClick:url=>{this.openPage(url)}
+          onClick:url=>{this.newOrder()}
         },
         {
           title: 'اوردراتــــي',
@@ -158,7 +158,15 @@ export class ClientAppComponent implements OnInit {
       //   window.open(url,"_self");
       // }
     }
-
+    newOrder(){
+      this.auth.getUser().then(user=>{
+          if(!user){
+              this.router.navigateByUrl("/client/edit-profile?fororder=1");
+          }else{
+              this.router.navigateByUrl("/client/address");
+          }
+      })
+  }
     // openIntent(url:string,intent:string){
     //   const options = {
     //     action: this.webIntent.ACTION_VIEW,

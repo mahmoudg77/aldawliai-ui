@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>عناويني</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+      
+<ion-list>
+  <ion-radio-group name="address" >
+    <ion-list-header>
+      <ion-label>اختر العنوان</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let item of address">
+      <ion-radio value="{{item.ADDRESS_ID}}" [checked]="selected==item" (click)="selected=item" slot="start"></ion-radio>
+      <ion-label>{{item.ADDRESS}}, {{item.CITY_NAM}}, {{item.CUNTRY_NAM}} </ion-label>
+    </ion-item>
+    
+  </ion-radio-group>
+</ion-list>     
+    <ion-button (click)="addNew()" expand="full" block>
+      <ion-icon slot="start" name="add"> </ion-icon>
+      اضافة عنوان جديد
+    </ion-button>
+  
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col size="6"> 
+          <ion-button  expand="full" block color="primary"  [disabled]="!selected" (click)="next()">
+            التالي
+          </ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button  expand="full" block color="primary"   (click)="cancel()">
+            الغــاء
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+     
+  </ion-toolbar>
+</ion-footer>

@@ -68,7 +68,10 @@ export class AuthService {
       //console.error(this.shared.getToken());
       this.call.postRequest("/User/Current","",
       next=>{
-        this.setUser(next.account);
+        if(next.account==null){
+          next.account={MOBIL:next.phone};
+        }
+        this.setUser(next);
         this.setType(next.type)
         //this.setToken(next.token);
         if(fnNext) fnNext(next);

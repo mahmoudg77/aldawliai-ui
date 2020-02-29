@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CounterService } from './../../services/bll/counter.service';
 import { LoadingService } from './../../services/loading.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -12,7 +13,7 @@ import { AppSettingsService } from 'src/app/services/bll/app-settings.service';
     styleUrls: ['./client-home.component.scss']
 })
 export class ClientHomeComponent implements OnInit {
-    data:any={};
+    data:any={opendorders:0,closedorders:0,devices:0};
     slides:string[]=[
         '/content/imgs/slider/1.jpg',
         '/content/imgs/slider/2.jpg',
@@ -72,6 +73,7 @@ export class ClientHomeComponent implements OnInit {
     constructor(private counter:CounterService,private router:Router,private platform:Platform,
         private loading:LoadingService,
         private settings:AppSettingsService,
+        private auth:AuthService
         // private dialogs:AlertController
 
         ){
@@ -80,8 +82,16 @@ export class ClientHomeComponent implements OnInit {
     }
 
     newOrder(){
-        this.router.navigateByUrl("/client/select-device");
+        this.auth.getUser().then(user=>{
+            if(!user.account.NAME){
+                this.router.navigateByUrl("/client/edit-profile?fororder=1");
+            }else{
+                this.router.navigateByUrl("/client/address");
+            }
+        })
     }
+    
+    
     open(url){
         this.router.navigateByUrl(url);
     }

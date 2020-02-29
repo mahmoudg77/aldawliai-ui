@@ -13,8 +13,8 @@ export class UserProfilePage implements OnInit {
   constructor(private auth:AuthService) { }
 
   ngOnInit() {
-    this.auth.getUser().then(next=>{
-      this.data=next;
+    this.auth.checkLogin(next=>{
+      this.data=next.account;
     });
   }
 

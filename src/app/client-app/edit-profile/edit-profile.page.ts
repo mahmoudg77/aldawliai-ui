@@ -1,3 +1,4 @@
+import { OrdersService } from 'src/app/services/bll/orders.service';
 import { LookupsService } from './../../services/bll/lookups.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -13,48 +14,66 @@ import { apiError } from 'src/app/services/dal/api-result';
 })
 export class EditProfilePage implements OnInit {
   form:FormGroup;
-  profileData:any;
+  profileData:any={};
   Countries: any;
   Cities: any;
-  selected_device:number;
-  selected_mark:number;
-  selected_code:number;
-
+  forOrder=0;
+  // selected_device:number;
+  // selected_mark:number;
+  // selected_code:number;
+  phone:string="";
   constructor(public auth:AuthService,
               private loader:LoadingService,
               private router:Router,
               private formBuilder:FormBuilder,
               private lookup:LookupsService,
-              private route:ActivatedRoute) { 
+              private route:ActivatedRoute,
+              private order:OrdersService) { 
                 this.form=new FormGroup({
-                    NAME:new FormControl(null,[Validators.required,Validators.minLength(10)]),
-                    CUNTRY_ID:new FormControl(null,Validators.required),
-                    CITY_ID:new FormControl(null,Validators.required),
-                    ADDRESS:new FormControl(null,Validators.required),
-                    TEL1:new FormControl(null,[Validators.minLength(7),Validators.maxLength(8)]),
-                    MOBIL1:new FormControl(null,[Validators.minLength(11),Validators.maxLength(13)]),
+                    NAME:new FormControl('',[Validators.required,Validators.minLength(10)]),
+                    // CUNTRY_ID:new FormControl(null,Validators.required),
+                    // CITY_ID:new FormControl(null,Validators.required),
+                    // ADDRESS:new FormControl(null,Validators.required),
+                    TEL1:new FormControl('',[Validators.minLength(7),Validators.maxLength(8)]),
+                    MOBIL:new FormControl('',[Validators.minLength(11),Validators.maxLength(13)]),
+                    MOBIL1:new FormControl('',[Validators.minLength(11),Validators.maxLength(13)]),
+                    MOBIL2:new FormControl('',[Validators.minLength(11),Validators.maxLength(13)]),
+                    HOT_LINE:new FormControl('',[Validators.minLength(4),Validators.maxLength(6)]),
+                   // CUS_ID:new FormControl(),
 
                   })
               }
 
   ngOnInit() {
-    this.auth.getUser().then(next=>{
-      if(!next){
-        this.profileData={};
-      }else{
-        this.profileData=next;
-      }
 
-    });
+    this.auth.checkLogin(next=>{
+      // this.auth.getUser().then(next=>{
+        if(!next){
+          this.profileData={};
+        }else{
+          this.profileData=next.account;
+          this.phone=next.phone;
+
+        }
+        
+      // });
+    })
     // if(this.auth.getUser()==null){
     //   this.profileData={};
     // }
     this.loadCountries();
+    // this.route.queryParams.subscribe(params=>{
+    //   this.selected_device=+params['device'];
+    //   this.selected_mark=+params['mark'];
+    //   this.selected_code=+params['code'];
+    // })
+    // this.selected_device=this.order.newOrder.DeviceTypeID;
+    // this.selected_mark=this.order.newOrder.MarkID;
+    // this.selected_code=this.order.newOrder.DeviceCode;
     this.route.queryParams.subscribe(params=>{
-      this.selected_device=+params['device'];
-      this.selected_mark=+params['mark'];
-      this.selected_code=+params['code'];
-    })
+      this.forOrder=+params['fororder'];
+    });
+
   }
   loadCountries(): any {
     this.lookup.getCountries(
@@ -77,18 +96,24 @@ export class EditProfilePage implements OnInit {
   }
 
   saveProfile(){
-    this.profileData=this.form.getRawValue();
+
+    //this.profileData=this.form.getRawValue();
     this.auth.saveMyProfile(this.profileData,
       next=>{
-        this.auth.setUser(next);
-        if(this.selected_device>0){
-          this.router.navigateByUrl("/client/new-order?device="+this.selected_device+"&mark="+this.selected_mark+"&code="+this.selected_code);
-        }else{
-          this.router.navigateByUrl("/client/select-device");
-        }
+        // this.auth.setUser(next);
+        // if(this.selected_device>0){
+        //   this.router.navigateByUrl("/client/new-order?device="+this.selected_device+"&mark="+this.selected_mark+"&code="+this.selected_code);
+        // }else{
+        //   this.router.navigateByUrl("/client/select-device");
+        // }
+        if(this.forOrder>0)
+          this.router.navigateByUrl("/client/address");
+        else 
+          this.router.navigateByUrl("/client/profile");
+
       },
       (error:apiError)=>{
-        alert(error.message);
+        //alert(error.message);
       })
   }
 }

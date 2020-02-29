@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'login-client', component:LoginClientPage },
   { path: 'login-user', component:LoginUserPage },
   { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
+
   // { path: 'check', loadChildren: './check/check.module#CheckPageModule' },
   
   // {

@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>اضافة عنوان</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <form [formGroup]="form">
+  <ion-item>
+    <ion-label position="floating"></ion-label>
+    <ion-select formControlName="CUNTRY_ID" placeholder="المحافظة" #C (ionChange)="loadCities(C.value)">
+        <ion-select-option *ngFor="let gov of Countries" value="{{gov.CUNTRY_ID}}">{{gov.CUNTRY_NAM}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <div *ngIf="form.controls['CUNTRY_ID'].invalid && (form.controls['CUNTRY_ID'].dirty || form.controls['CUNTRY_ID'].touched)" class="alert alert-danger">
+    <div *ngIf="form.controls['CUNTRY_ID'].errors.required">اختر المحافظة</div>
+  </div>
+  <ion-item>
+    <ion-label position="floating"></ion-label>
+    <ion-select formControlName="CITY_ID" placeholder="المنطقة">
+        <ion-select-option *ngFor="let city of Cities" value="{{city.CITY_ID}}">{{city.CITY_NAM}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+      <div *ngIf="form.controls['CITY_ID'].invalid && (form.controls['CITY_ID'].dirty || form.controls['CITY_ID'].touched)" class="alert alert-danger">
+        <div *ngIf="form.controls['CITY_ID'].errors.required">اختر المنطقة</div>
+      </div>
+  <ion-item>
+    <ion-label position="stacked">العنوان</ion-label>
+    <ion-textarea formControlName="ADDRESS"  maxlength="250" ></ion-textarea>
+  </ion-item>
+  <div *ngIf="form.controls['ADDRESS'].invalid && (form.controls['ADDRESS'].dirty || form.controls['ADDRESS'].touched)" class="alert alert-danger">
+    <div *ngIf="form.controls['ADDRESS'].errors.required">اكتب العنوان</div>
+    <div *ngIf="form.controls['ADDRESS'].errors.minLength">العنوان قصير جداً</div>
+  </div>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col size="6"> 
+          <ion-button  expand="full" block color="primary"  [disabled]="form.invalid" (click)="saveAddress()">
+            حفظ البيانات
+          </ion-button>
+        </ion-col>
+        <ion-col size="6">
+            <ion-button  expand="full" block color="secondary"   (click)="cancel()">
+                الغــاء
+            </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+     
+  </ion-toolbar>
+</ion-footer>

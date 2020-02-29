@@ -22,7 +22,8 @@ export class MyDevicesComponent implements OnInit {
     private router:Router,
     private auth:AuthService,
     private platform:Platform,
-    private route:ActivatedRoute) { }
+    private route:ActivatedRoute,
+    private order:OrdersService) { }
 
   ngOnInit() {
     this.lookups.getMyDevices(
@@ -60,7 +61,12 @@ selectMyDevice(ID:string){
     this.router.navigateByUrl("/client/edit-profile");
     return;
   }
-  this.router.navigateByUrl("/client/new-order?device="+ selected.DeviceTypeID+"&mark="+selected.MarkID+"&code="+selected.DeviceCode);
+  
+  this.order.newOrder.DeviceTypeID= parseInt(selected.DeviceTypeID);
+  this.order.newOrder.MarkID= parseInt(selected.MarkID);
+  this.order.newOrder.DeviceCode= parseInt(selected.DeviceCode);
+  // this.router.navigateByUrl("/client/new-order?device="+ selected.DeviceTypeID+"&mark="+selected.MarkID+"&code="+selected.DeviceCode);
+  this.router.navigateByUrl("/client/new-order");
   });
 }
 

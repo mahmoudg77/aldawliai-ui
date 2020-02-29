@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoadingService {
+export class ToasterService {
 
   isLoading = false;
 
-  constructor(public loadingController: LoadingController) { }
+  constructor(public toastController: ToastController) { }
 
-  async present(message:string="") {
+   present(message:string="") {
     this.isLoading = true;
-    return await this.loadingController.create({
+    return  this.toastController.create({
         message:message,
-        duration: 15000,
+        duration: 5000,
         
     }).then(a => {
       a.present().then(() => {
@@ -28,10 +28,10 @@ export class LoadingService {
     });
   }
 
-  async dismiss() {
+ dismiss() {
     this.isLoading = false;
     try {
-      return await this.loadingController.dismiss().then(
+      return this.toastController.dismiss().then(
         // () => console.log('dismissed')
         );
     } catch (error) {

@@ -20,12 +20,10 @@ export class SelectDevicePage implements OnInit {
   ngOnInit() {
     this.auth.checkLogin(
       next=>{
-        // this.router.navigateByUrl("/client/home");
         this.loading.dismiss();
       },
       (error:apiError)=>{
         this.loading.dismiss();
-        
         this.router.navigateByUrl("/home");
       })
   }

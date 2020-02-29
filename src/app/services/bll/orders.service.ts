@@ -1,3 +1,4 @@
+import { Order } from './bll';
 import { DataLoaderService } from './../dal/data-loader.service';
 import { CallapiService } from './../dal/callapi.service';
 import { Injectable } from '@angular/core';
@@ -10,7 +11,7 @@ export class OrdersService {
   constructor(private api:CallapiService) {
 
    }
-
+   public newOrder:Order;
    public currentOrders={
       draw : 0,
       recordsTotal:0,
@@ -18,7 +19,9 @@ export class OrdersService {
       data:[],
     };
     public preOrders=[];
-   
+   resetNewOrder(){
+     this.newOrder=new Order();
+   }
    getMyOrders(next:any=null,error:any=null,){
      this.api.getRequest("/Order/MyOrders","",data=>{if(next)next(data);},err=>{if(error)error(err);});
    }

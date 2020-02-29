@@ -28,17 +28,26 @@ export class NewOrderPage implements OnInit {
               private route:ActivatedRoute
               ) { 
 
-                if(auth.getUser()==null) {
-                  router.navigateByUrl("/client/edit-profile");
-                  return;
-                }
+                // if(auth.getUser()==null) {
+                //   router.navigateByUrl("/client/edit-profile");
+                //   return;
+                // }
+                this.auth.getUser().then(user=>{
+                    if(!user) {
+                      router.navigateByUrl("/client/edit-profile");
+                      return;
+                    }
+                })
               
                 this.form=new FormGroup(
                   {
                     DeviceTypeID:new FormControl(null,Validators.required) ,
                     MarkID:new FormControl(null,Validators.required) ,
                     DeviceCode:new FormControl(null,Validators.required) ,
-                    ComplaintNote:new FormControl(null,Validators.required) 
+                    ComplaintNote:new FormControl(null,Validators.required) ,
+                    AddressID:new FormControl(null,Validators.required) ,
+                    DeviceSize:new FormControl(null) ,
+                    
                   }
                 )
 
@@ -48,14 +57,19 @@ export class NewOrderPage implements OnInit {
     // this.loadMyDevices();
     // this.loadDevicetypes();
     // this.loadMarks();
-    this.route.queryParams.subscribe(
-      params=>{
-        this.form.controls['DeviceTypeID'].setValue(+params['device']);
-        this.form.controls['MarkID'].setValue(+params['mark']);
-        this.form.controls['DeviceCode'].setValue(+params['code']);
-      }
-    )
-
+    // this.route.queryParams.subscribe(
+    //   params=>{
+    //     this.form.controls['DeviceTypeID'].setValue(+params['device']);
+    //     this.form.controls['MarkID'].setValue(+params['mark']);
+    //     this.form.controls['DeviceCode'].setValue(+params['code']);
+    //   }
+    // )
+    console.log(this.order.newOrder);
+        this.form.controls['DeviceTypeID'].setValue(this.order.newOrder.DeviceTypeID);
+        this.form.controls['MarkID'].setValue(this.order.newOrder.MarkID);
+        this.form.controls['DeviceCode'].setValue(this.order.newOrder.DeviceCode);
+        this.form.controls['AddressID'].setValue(this.order.newOrder.AddressID);
+       
   }
   loadMarks(): any {
     this.lookup.getDeviceTypes(next=>{
@@ -91,8 +105,8 @@ export class NewOrderPage implements OnInit {
     this.order.saveOrder(this.orderData,
       next=>{
         if(next==true){
-          this.router.navigateByUrl("/client/order-success");
           this.loader.dismiss();
+          this.router.navigateByUrl("/client/order-success");
         }
       },
       (error:apiError)=>{

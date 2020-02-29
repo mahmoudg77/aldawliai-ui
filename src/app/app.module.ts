@@ -1,3 +1,4 @@
+import { ClientsService } from './services/clients.service';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { StockService } from './services/bll/stock.service';
 import { LookupsService } from './services/bll/lookups.service';
@@ -65,6 +66,7 @@ import { FCM } from '@ionic-native/fcm/ngx';
     AsyncPipe,
     AppVersion,
     Market,
+    ClientsService,
     // WebIntent,
     FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
