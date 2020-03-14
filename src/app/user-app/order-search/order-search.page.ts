@@ -19,7 +19,7 @@ export class OrderSearchPage implements OnInit {
 
   ngOnInit() {
     this.auth.getUser().then(user=>{
-      this.data.eng_id=user.ENG_ID;
+      this.data.eng_id=user.account.ENG_ID;
     })
   }
   onSubmit(){

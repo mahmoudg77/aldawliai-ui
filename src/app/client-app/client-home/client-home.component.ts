@@ -82,8 +82,8 @@ export class ClientHomeComponent implements OnInit {
     }
 
     newOrder(){
-        this.auth.getUser().then(user=>{
-            if(!user.account.NAME){
+        this.auth.checkLogin(user=>{
+            if((user.account||null)==null || (user.account.NAME||null)==null || user.account.NAME==''){
                 this.router.navigateByUrl("/client/edit-profile?fororder=1");
             }else{
                 this.router.navigateByUrl("/client/address");

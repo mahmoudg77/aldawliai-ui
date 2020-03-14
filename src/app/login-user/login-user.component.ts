@@ -1,6 +1,6 @@
 import { AuthService } from './../services/auth/auth.service';
 import { SharedService } from './../services/shared.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -11,7 +11,10 @@ import { Router } from '@angular/router';
   templateUrl: './login-user.component.html',
   styleUrls: ['./login-user.component.scss'],
 })
-export class LoginUserPage implements OnInit {
+export class LoginUserPage implements OnInit , OnDestroy{
+  ngOnDestroy(): void {
+    this.loginForm.reset();
+  }
   loginForm:FormGroup;
   constructor(
     private formBuilder:FormBuilder,
@@ -47,6 +50,7 @@ export class LoginUserPage implements OnInit {
     next=>{
       this.loadingService.dismiss();
       this.router.navigateByUrl("/user/home");
+      this.ngOnDestroy();
       
     },
     error=>{

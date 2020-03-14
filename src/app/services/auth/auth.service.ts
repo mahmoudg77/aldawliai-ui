@@ -91,7 +91,10 @@ export class AuthService {
       this.fcm.getToken().then(deviceID=>{
           this.call.postRequest("/User/login",{"firebase_token":token,"device_id":deviceID},
           next=>{
-            this.setUser(next.account);
+            if(next.account==null){
+              next.account={MOBIL:next.phone};
+            }
+            this.setUser(next);
             this.setToken(next.token);
             this.setType(next.type);
             if(fnNext!=null) fnNext(next);
@@ -109,7 +112,10 @@ export class AuthService {
   clientLoginByPhone(otp:string,phone:string,fnNext:any=null,fnError:any=null){
           this.call.postRequest("/User/loginbyphone",{"otp":otp,"mobile":phone},
           next=>{
-            this.setUser(next.account);
+            if(next.account==null){
+              next.account={MOBIL:next.phone};
+            }
+            this.setUser(next);
             this.setToken(next.token);
             this.setType(next.type);
             if(fnNext!=null) fnNext(next);
@@ -138,7 +144,10 @@ export class AuthService {
   userLogin(username:string,password:string,fnNext:any=null,fnError:any=null){
          this.call.postRequest("/User/UserLogin",{"username":username,"password":password},
         next=>{
-          this.setUser(next.account);
+          if(next.account==null){
+            next.account={MOBIL:next.phone};
+          }
+          this.setUser(next);
           this.setToken(next.token);
           this.setType(next.type);
           if(this.getToken())

@@ -158,15 +158,25 @@ export class ClientAppComponent implements OnInit {
       //   window.open(url,"_self");
       // }
     }
-    newOrder(){
-      this.auth.getUser().then(user=>{
-          if(!user){
-              this.router.navigateByUrl("/client/edit-profile?fororder=1");
-          }else{
-              this.router.navigateByUrl("/client/address");
-          }
-      })
-  }
+  //   newOrder(){
+  //     this.auth.getUser().then(user=>{
+  //         if(!user){
+  //             this.router.navigateByUrl("/client/edit-profile?fororder=1");
+  //         }else{
+  //             this.router.navigateByUrl("/client/address");
+  //         }
+  //     })
+  // }
+
+  newOrder(){
+    this.auth.checkLogin(user=>{
+      if((user.account||null)==null || (user.account.NAME||null)==null || user.account.NAME==''){
+          this.router.navigateByUrl("/client/edit-profile?fororder=1");
+      }else{
+          this.router.navigateByUrl("/client/address");
+      }
+  })
+}
     // openIntent(url:string,intent:string){
     //   const options = {
     //     action: this.webIntent.ACTION_VIEW,

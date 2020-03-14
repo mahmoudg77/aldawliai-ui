@@ -173,7 +173,7 @@ export class OrderClosePage implements OnInit,AfterViewInit {
         //   }
         //   this.loading.dismiss();
         this.auth.getUser().then(user=>{
-          this.order.getMoreOrders({draw:0,length :1000,start: 0}, 0,"","",user.ENG_ID,0,
+          this.order.getMoreOrders({draw:0,length :1000,start: 0}, 0,"","",user.account.ENG_ID,0,
             next=>{
               this.order.currentOrders=next;
               this.loading.dismiss();
