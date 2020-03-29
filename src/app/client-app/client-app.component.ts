@@ -1,3 +1,4 @@
+import { SharedService } from 'src/app/services/shared.service';
 import { LoadingService } from './../services/loading.service';
 import { AppSettingsService } from './../services/bll/app-settings.service';
 import { Platform, IonRouterOutlet, AlertController } from '@ionic/angular';
@@ -92,6 +93,7 @@ export class ClientAppComponent implements OnInit {
         private settings:AppSettingsService,
         // private webIntent:WebIntent,
         private loading:LoadingService,
+        public shared:SharedService
      ){
 
       // const msg={
@@ -152,7 +154,7 @@ export class ClientAppComponent implements OnInit {
       //if(this.platform.is("android")||this.platform.is("ios")){
         //this.inappbrowser.create(url,"_self").show();
         this.loading.present();
-        window.open(url,"_self");
+        this.shared.openWebSite(url);
         this.loading.dismiss()
       // }else{
       //   window.open(url,"_self");

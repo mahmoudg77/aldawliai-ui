@@ -24,7 +24,7 @@ export class AppComponent  {
   app_version:string;
   force_update:string;
   version:string;
-  id:string;
+  id:string="com.webegy.aldawlia";
   @ViewChild(IonRouterOutlet,{static:false}) routerOutlet: IonRouterOutlet;
 
   constructor(
@@ -44,7 +44,11 @@ export class AppComponent  {
     this.initializeApp();
     
     appVersion.getPackageName().then(id=>{
+      console.log(this.id);
       this.id=id;
+    }).catch(err=>{
+      
+      console.log(err);
     })
 
     
@@ -96,6 +100,7 @@ export class AppComponent  {
         text: 'تحديث',
         cssClass: 'prinmary',
         handler: () => {
+          console.log(this.id);
           this.market.open(this.id);
 
         }

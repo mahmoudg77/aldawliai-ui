@@ -20,6 +20,6 @@ export const environment = {
    //apiUrl:"https://dawlia.nearyouweb.com"
    //apiUrl:"http://41.32.248.67"
    apiUrl:"https://eldawlya19089.com",
-   version:'2.5.0'
+   version:'2.6.0'
 
 };

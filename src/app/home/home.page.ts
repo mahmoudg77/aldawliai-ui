@@ -1,3 +1,4 @@
+import { SharedService } from 'src/app/services/shared.service';
 import { AppSettingsService } from './../services/bll/app-settings.service';
 import { Platform } from '@ionic/angular';
 // import { AuthService } from './../services/auth/auth.service';
@@ -5,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 // import { StatusBar } from '@ionic-native/status-bar/ngx';
 // import { Router } from '@angular/router';
-// import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-home',
@@ -33,22 +34,25 @@ export class HomePage implements OnInit {
   constructor(
       // private statusBar: StatusBar
       private router:Router,
-      // private inappbrowser:InAppBrowser,
+      private inappbrowser:InAppBrowser,
       private platform:Platform,
-      private settings:AppSettingsService
+      private settings:AppSettingsService,
+      public shared:SharedService
 
   ){
 
   }
 
 
-  openWebSite(url:string){
-    // if(this.platform.is("android")||this.platform.is("ios")){
-    //   this.inappbrowser.create(url,"_self").show();
-    // }else{
-      window.open(url,"_self");
-    // }
-  }
+  // openWebSite(url:string){
+  //   //console.log(url);
+  //   // if(this.platform.is("android")||this.platform.is("ios")){
+  //   //   this.inappbrowser.create(url,"_blank").show();
+  //   // }else{
+  //   //   window.open(url);
+  //   // }
+    
+  // }
   openPage(url:string){
     this.router.navigateByUrl(url);
   }

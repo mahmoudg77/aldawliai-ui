@@ -1,3 +1,5 @@
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Platform } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -11,7 +13,11 @@ export class SharedService {
     alert(message);
   }
 
-  constructor() { }
+  constructor(
+    private inappbrowser:InAppBrowser,
+    private platform:Platform,
+
+  ) { }
 
   async presentLoading() {
     const loadingController = document.querySelector('ion-loading-controller');
@@ -25,6 +31,13 @@ export class SharedService {
     return await loadingElement.present();
   }
 
-
+  openWebSite(url:string){
+    //console.log(url);
+    if(this.platform.is("android")||this.platform.is("ios")){
+      this.inappbrowser.create(url,"_blank").show();
+    }else{
+      window.open(url);
+    }
+  }
 
 }

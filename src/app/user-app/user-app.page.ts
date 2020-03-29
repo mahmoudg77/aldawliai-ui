@@ -1,3 +1,4 @@
+import { SharedService } from 'src/app/services/shared.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { AppSettingsService } from './../services/bll/app-settings.service';
 import { Platform } from '@ionic/angular';
@@ -83,6 +84,7 @@ export class UserAppPage implements OnInit {
     private platform:Platform,
     private settings:AppSettingsService,
     private loading:LoadingService,
+    public shared:SharedService
 
 ){
 
@@ -130,7 +132,7 @@ logout(){
     //   this.inappbrowser.create(url,"_self").show();
     // }else{
       this.loading.present();
-      window.open(url,"_self");
+      this.shared.openWebSite(url);
       this.loading.dismiss()
   // }
   }

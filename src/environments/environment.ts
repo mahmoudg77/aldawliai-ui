@@ -25,7 +25,7 @@ export const environment = {
   //  apiUrl:"http://41.32.248.67",
   apiUrl:"https://new.eldawlya19089.com",
 
-  version:'2.5.0'
+  version:'2.6.0'
 };
 
 /*

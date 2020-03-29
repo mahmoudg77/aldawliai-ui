@@ -1,3 +1,4 @@
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ClientsService } from './services/clients.service';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { StockService } from './services/bll/stock.service';
@@ -67,6 +68,7 @@ import { FCM } from '@ionic-native/fcm/ngx';
     AppVersion,
     Market,
     ClientsService,
+    InAppBrowser,
     // WebIntent,
     FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

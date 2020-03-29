@@ -23,6 +23,7 @@
 		"@ionic-native/app-version": "^5.13.0",
 		"@ionic-native/core": "^5.0.0",
 		"@ionic-native/fcm": "^5.13.0",
+		"@ionic-native/in-app-browser": "^5.23.0",
 		"@ionic-native/ionic-webview": "^5.13.0",
 		"@ionic-native/keyboard": "^5.13.0",
 		"@ionic-native/market": "^5.13.0",
@@ -40,6 +41,7 @@
 		"cordova-plugin-device": "^2.0.3",
 		"cordova-plugin-fcm-with-dependecy-updated": "3.0.0",
 		"cordova-plugin-firebase": "^2.0.5",
+		"cordova-plugin-inappbrowser": "3.2.0",
 		"cordova-plugin-ionic-keyboard": "^2.2.0",
 		"cordova-plugin-ionic-webview": "4.1.1",
 		"cordova-plugin-market": "1.2.0",
@@ -95,7 +97,8 @@
 			"cordova-plugin-statusbar": {},
 			"cordova-plugin-whitelist": {},
 			"cordova-sqlite-storage": {},
-			"com-darryncampbell-cordova-plugin-intent": {}
+			"com-darryncampbell-cordova-plugin-intent": {},
+			"cordova-plugin-inappbrowser": {}
 		},
 		"platforms": [
 			"browser",
